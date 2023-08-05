@@ -22,16 +22,38 @@ public class MessageController {
     // why a HashSet??
 
     public ArrayList<Message> getMessages() {
-        return null;
+        return new ArrayList<>(messagesSeen);
     }
-    public ArrayList<Message> getMessagesForId(Id Id) {
-        return null;
+    public ArrayList<Message> getMessagesForId(String idName) {
+        ArrayList<Message> allMessages = getMessages();
+        int arrListIdx = 0;
+        while(arrListIdx < allMessages.size()){
+            Message temp = allMessages.get(arrListIdx);
+            if(!temp.getToid().equals(idName)){
+                allMessages.remove(temp);
+            }
+            else{
+                arrListIdx++;
+            }
+        }
+        return allMessages;
     }
     public Message getMessageForSequence(String seq) {
         return null;
     }
-    public ArrayList<Message> getMessagesFromFriend(Id myId, Id friendId) {
-        return null;
+    public ArrayList<Message> getMessagesFromFriend(String myId, String friendId) {
+        ArrayList<Message> allMessages = getMessagesForId(myId);
+        int arrListIdx = 0;
+        while(arrListIdx < allMessages.size()){
+            Message temp = allMessages.get(arrListIdx);
+            if(!temp.getFromId().equals(friendId)){
+                allMessages.remove(temp);
+            }
+            else{
+                arrListIdx++;
+            }
+        }
+        return allMessages;
     }
 
     public Message postMessage(Id myId, Id toId, Message msg) {
@@ -41,13 +63,21 @@ public class MessageController {
     public void doCommand(Command cmd) {
         if (cmd.getCmd() == Command.Verb.GETMESG) {
             List<Message> msgs = tctrl.getMessages();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < msgs.size(); i++) {
                 System.out.println(new MessageTextView(msgs.get(i)).toString());
             }
         }
         if (cmd.getCmd() == Command.Verb.POSTMSG) {
             Message result = tctrl.postMessage(cmd.getArg(1), cmd.getArg(2), cmd.getRest(3));
             System.out.println(new MessageTextView(result).toString());
+        }
+        if (cmd.getCmd() == Command.Verb.GETMYMESG) {
+            messagesSeen = new HashSet<>(tctrl.getMessages());
+            ArrayList<Message> msgs = getMessagesForId(cmd.getArg(1));
+
+            for (int i = 0; i < msgs.size(); i++) {
+                System.out.println(new MessageTextView(msgs.get(i)).toString());
+            }
         }
     }
 }

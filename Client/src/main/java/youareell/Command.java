@@ -17,6 +17,7 @@ public class Command {
         POSTMSG("send"),
         // you may need to add more here...
         // for more commands
+        GETMYMESG("mymessages"),
         QUIT("quit"),
         HELP("help"),
         ERR("error"),
@@ -82,6 +83,7 @@ public class Command {
             sb.append(tokens[i]);
             sb.append(" ");
         }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }
 
@@ -89,7 +91,7 @@ public class Command {
     private Command(Verb v) { this.currentCmd = v;}
 
     public Command interpret(String s) {
-        System.out.println("intepreting ["+s+"]");
+        System.out.println("interpreting ["+s+"]");
 
         tokens = s.split(" ");
         Verb verb = Verb.get(tokens[0]);
@@ -115,7 +117,8 @@ public class Command {
     public boolean isMsgCmd() {
         // as you add ENUMs, add more to this condition.
         if (this.currentCmd == Verb.POSTMSG
-                || this.currentCmd == Verb.GETMESG) return true;
+                || this.currentCmd == Verb.GETMESG
+        || this.currentCmd == Verb.GETMYMESG) return true;
         return false;
     }
 

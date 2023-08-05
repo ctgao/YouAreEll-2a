@@ -116,7 +116,7 @@ public class TransactionController {
                 return newMsg;
             } else {
                 System.out.println("Failure of POST" + response.statusCode());
-                System.out.println("Error: "+response.toString());
+                System.out.println("Error: " + response.toString());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
