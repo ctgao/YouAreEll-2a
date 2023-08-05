@@ -72,7 +72,7 @@ public class Command {
     private Verb currentCmd = Verb.NOOP;
     private String[] tokens;
     public String getArg(int idx) {
-        if (idx > tokens.length) {
+        if (idx >= tokens.length) {
             return null;
         }
         return tokens[idx];
