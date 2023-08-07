@@ -73,11 +73,12 @@ public class MessageController {
                 msgs = getMessages();
             }
             else{
-                msgs = getMessagesForId(cmd.getArg(1));
+                msgs = getMessagesForId(idName);
             }
-            int i = 0;
-            while(i < msgs.size() && i < 20){
-                System.out.println(new MessageTextView(msgs.get(i++)).toString());
+//            int i = 0;
+//            while(i < msgs.size() && i < 20){
+            for(int i = 0; i < msgs.size() && i < 20; i++){
+                System.out.println(new MessageTextView(msgs.get(i)).toString());
             }
         }
         if (cmd.getCmd() == Command.Verb.POSTMSG) {

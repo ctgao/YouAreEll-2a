@@ -42,7 +42,7 @@ public class YouAreEll {
                 done = true;
                 continue;
             }
-            this.displayErr("Unknown commandmessa. Type `help` for examples.");
+            this.displayErr("Unknown command. Type `help` for examples.");
         }
 
     }
